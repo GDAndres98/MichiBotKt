@@ -1,2 +1,2 @@
 spring.application.name: michibot
-
+bot.token: ${BOT_TOKEN}
