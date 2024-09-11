@@ -10,17 +10,31 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '17'
+
       - name: Build Project
         run: mvn clean install -DskipTests
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t michigang/michibot .
+        run: docker build -t gdandres98/michibot .
       - name: Publish image to docker hub
-        run: docker push michigang/michibot:latest
+        run: docker push gdandres98/michibot:latest
+
+  deploy:
+    needs: build
+    runs-on: aws-ec2
+    environment: prod
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull gdandres98/michibot:latest
+      - name: Stop current container
+        run: docker rm -f michibot
+      - name: Run new container
+        run: docker run -d -p 8080:8080 -e BOT_TOKEN='${{secrets.BOT_TOKEN}}' --name michibot gdandres98/michibot
 
