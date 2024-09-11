@@ -7,7 +7,6 @@ jobs:
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -30,11 +29,12 @@ jobs:
   deploy:
     needs: build
     runs-on: aws-ec2
+    environment: prod
     steps:
       - name: Pull image from docker hub
         run: docker pull gdandres98/michibot:latest
       - name: Stop current container
         run: docker rm -f michibot
       - name: Run new container
-        run: docker run -d -p 8080:8080 --name michibot gdandres98/michibot
+        run: docker run -d -p 8080:8080 --name michibot gdandres98/michibot -e BOT_TOKEN=${{secrets.BOT_TOKEN}}
 
