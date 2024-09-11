@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [ gh-actions ]
+    branches: [ master ]
 jobs:
   build:
     name: Build Docker Image
