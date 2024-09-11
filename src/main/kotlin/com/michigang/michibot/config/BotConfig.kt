@@ -20,7 +20,7 @@ class BotConfig {
             DiscordClientBuilder.create(token)
                     .build()
                     .gateway()
-                    .setInitialPresence { ClientPresence.online(ClientActivity.listening("tu cotazón uwu")) }
+                    .setInitialPresence { ClientPresence.online(ClientActivity.listening("tu corazón uwu")) }
                     .login()
                     .block()
 
