@@ -33,10 +33,8 @@ jobs:
     steps:
       - name: Pull image from docker hub
         run: docker pull gdandres98/michibot:latest
-      - name: test creds
-        run: echo ${{secrets.BOT_TOKENTEST}}
-#      - name: Stop current container
-#        run: docker rm -f michibot
-#      - name: Run new container
-#        run: docker run -d -p 8080:8080 --name michibot gdandres98/michibot -e BOT_TOKEN=${{secrets.BOT_TOKENTEST}}
+      - name: Stop current container
+        run: docker rm -f michibot
+      - name: Run new container
+        run: docker run -d -p 8080:8080 --name michibot gdandres98/michibot -e BOT_TOKEN='${{secrets.BOT_TOKENTEST}}'
 
